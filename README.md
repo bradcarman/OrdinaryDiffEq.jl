@@ -1,3 +1,9 @@
+# Notes about this fork
+
+This fork is attempting to make the divergence checks done with nlsolve! less severe.  
+
+
+
 # OrdinaryDiffEq.jl
 
 

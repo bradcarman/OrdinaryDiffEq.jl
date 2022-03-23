@@ -59,12 +59,14 @@ function nlsolve!(nlsolver::AbstractNLSolver, integrator, cache=nothing, repeat_
         end
       end
 
+      # *******************************
       # divergence
-      if θ > 2
-        nlsolver.status = Divergence
-        nlsolver.nfails += 1
-        break
-      end
+      # if θ > 2
+      #   nlsolver.status = Divergence
+      #   nlsolver.nfails += 1
+      #   break
+      # end
+      # *******************************
     end
 
     apply_step!(nlsolver, integrator)
@@ -75,6 +77,14 @@ function nlsolve!(nlsolver::AbstractNLSolver, integrator, cache=nothing, repeat_
       nlsolver.status = Convergence
       nlsolver.nfails = 0
       break
+    else
+      # *******************************
+      if iter == maxiters
+        #TODO: this is not ideal, but the idea is we simply should continue even if not fully iterated.
+        # Often we can converge on the next time step, if not likely !isfinite() will catch a true divergence
+        nlsolver.status = Convergence
+      end
+      # *******************************
     end
   end
 
